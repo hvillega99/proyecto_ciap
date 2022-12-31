@@ -48,6 +48,13 @@ library(tidyverse)
 
 siniestros <- read.csv('./data/BDD_NOVIEMBRE.csv')
 
+count_na <- siniestros %>% 
+  select(everything()) %>%
+  summarise_all(funs(sum(is.na(.))))
+
+df_siniestros <- siniestros %>%
+  select(ANIO, LESIONADOS, FALLECIDOS, PROVINCIA, CANTON, PARROQUIA, FECHA, HORA, TIPO_DE_SINIESTRO, TIPO_DE_VEHICULO_1)
+
 ```
 
 ### 1.2.- Revisiones científicas exhaustivas de un área de su interés
