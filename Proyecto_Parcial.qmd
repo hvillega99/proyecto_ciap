@@ -1,0 +1,168 @@
+---
+title: 'Análisis avanzado e inteligencia artificial con R'
+subtitle: 'Proyecto Parcial'
+author: "Nombre_Completo 1 - Correo1; Nombre_Completo 2 - Correo2; Nombre_Completo 3 - Correo3; Nombre_Completo 4 - Correo4;"
+date: "`r Sys.Date()`"
+date-format: short
+title-block-banner: "#243363"
+format:
+  html:
+    css: styles.css
+    html-math-method: katex
+    toc: true
+    toc-depth: 4
+    toc-location: right
+    toc-title: Tabla de contenido
+    page-layout: article
+    cap-location: bottom
+    tbl-cap-location: top
+---
+
+```{r warning=FALSE, message=FALSE,echo=FALSE}
+rm(list=ls())         # borrar todo lo que haya en memoria
+options(scipen=999)   # evitar notacion cientifica
+options(encoding = "utf-8")
+
+#Instalar librerias necesarias
+#if(!require(knitr)){install.packages("knitr")}
+#if(!require(readxl)){install.packages("readxl")}
+
+library(knitr)
+
+# Global options
+options(max.print="75")
+opts_chunk$set(message=FALSE, warning=FALSE)
+opts_knit$set(width=75)
+```
+
+![](img/espol.png){width="353" height="66"} ![](img/CIAP.jpeg){width="275"}
+
+## 1.- Importación de datos (1 punto)
+
+Tienen dos opciones: \### 1.1.- Bases de datos que se utilizan para IA Buscar 4 (si el grupo es de tres estudiantes, sólo hacer 3) artículos científicos del área de su interés o carrera en donde se utilice algoritmos de inteligencia artificial. Estas investigaciones todavía no necesitan entenderlo por completo. Sólo deben procurar de revisar de que se tenga la disponibilidad de descargar su base de datos. Posteriormente, usar las diferentes funciones de importación de archivos para que R lea las 4 bases de datos encontradas de estos artículos.
+
+```{r}
+# Colocar aquí el código para sus bases de datos. Las database deben tener diferentes tipos de formato.Archivos .csv o .xlsx se pueden repetir dos veces. Sin embargo, para hacer la lectura de los files deben utilizar las diferentes funciones enseñadas.
+
+library(tidyverse)
+
+siniestros <- read.csv('./data/BDD_NOVIEMBRE.csv')
+
+count_na <- siniestros %>% 
+  select(everything()) %>%
+  summarise_all(funs(sum(is.na(.))))
+
+siniestros %>%
+  select(ANIO) %>%
+  summary()
+```
+
+### 1.2.- Revisiones científicas exhaustivas de un área de su interés
+
+Buscar 4 (si el grupo es de tres estudiantes, sólo hacer 3) revisiones científicos del área de su interés o carrera. Estas investigaciones necesitarán entenderlo por completo. Además, deberán revisar de que se tenga la disponibilidad de descargar su base de datos. Posteriormente, usar las diferentes funciones de importación de archivos para que R lea las 4 bases de datos encontradas de estos artículos.
+
+```{r}
+# Colocar aquí el código para sus bases de datos. Las database deben tener diferentes tipos de formato.Archivos .csv o .xlsx se pueden repetir dos veces. Sin embargo, para hacer la lectura de los files deben utilizar las diferentes funciones enseñadas. 
+
+
+```
+
+## 2.- Visualización de datos con ggplot (4 punto; 2 de visualización y 2 de análisis)
+
+Deben realizar 4 (si el grupo es de tres estudiantes, sólo hacer 3) visualizaciones con ggplot que sean lo más idénticas posibles al que se presentan en el artículo. Procuren revisar: - El nombre de los ejes. ¿Está en negrita, cursiva, subrayado? - El nombre del título. ¿Está en negrita, cursiva, subrayado? ¿Su tamaño de letra es el más grande de todos los otros tipos de palabras? - ¿Tiene leyenda? ¿Qué se lee en la leyenda? ¿Y los colores? - ¿Cómo es el color de fondo? ¿Presenta cuadrículas? - Revisar tipo de texto, líneas, coordenadas, valores de error. - ¿Es interactivo?
+
+```{r}
+# Colocar aquí el código para producir las visualizaciones. 
+
+
+```
+
+### 2.1- Primer 1 punto extra
+
+No es necesario, pero si quieren tener 1/2 punto extra, deben buscar en internet cómo hacer para poner las 4 figuras anteriormente producidas en un solo gráfico. Una vez que encuentren el paquete y la función, escribir el código a continuación:
+
+```{r}
+# Colocar aquí el código para producir la visualización. 
+
+
+```
+
+### 2.2.- Análisis de los gráficos
+
+Interpretar los resultados. No copiar ni traducir y copiar. Escribir con sus propias palabras los hallazgos encontrados. Con base al conocimiento de su carrera, ¿qué errores o límitantes encuentra en los resultados? ¿qué se puede mejorar?
+
+#### 2.2.1.- Interpretación del gráfico 1
+
+#### 2.2.2.- Interpretación del gráfico 2
+
+#### 2.2.3.- Interpretación del gráfico 3
+
+#### 2.2.4.- Interpretación del gráfico 4
+
+## 3.- Estadística descriptiva e inferencial (5 puntos; 1 por estadística descriptiva; 2 por análisis inferencial y multivariable; 2 por interpretación)
+
+### 3.1.- Estadística descriptiva
+
+Realizar estadística descriptiva de las 4 bases de datos utilizadas en este trabajo. Determinar: - Media - Mediana - Cuartiles 25% y 75% - Curtosis - Simetría - Mínimo - Máximo - Desviación estándar - Varianza
+
+Armar todos estos resultados en una sola tabla. En las columnas van a estar los nombres de las variables y en las filas van a tener cada una de las medidas de tendencia central y de estadística descriptiva.
+
+```{r}
+# Colocar aquí el código para el ejercicio
+
+
+```
+
+### 3.2.- Segundo 1 punto extra
+
+Realizar el mismo procedimiento anterior utilizando un paquete que encuentre en internet. Hay un paquete que hace todo con una sola función. Búsquelo y una vez que lo halle, haga el ejercicio anterior.
+
+```{r}
+# Colocar aquí el código para el ejercicio 
+
+
+```
+
+### 3.3.- Análisis inferencial y multivariable
+
+En este apartado, deben realizar: - ANOVA - Biplot - Análisis factorial - MANOVA
+
+Para al menos una base de datos. No es necesario hacerlo para las 4 bases de datos. Sólo se requerirá utilizar otra base de datos si la técnica no es aplicable en las bases de datos encontradas.
+
+```{r}
+# Colocar aquí el código para ANOVA 
+
+
+```
+
+```{r}
+# Colocar aquí el código para Biplot
+
+
+```
+
+```{r}
+# Colocar aquí el código para Análisis factorial
+
+
+```
+
+```{r}
+# Colocar aquí el código para MANOVA
+
+
+```
+
+### 3.4.- Realizar la interpretación de las 4 técnicas anteriormente utilizadas. Discutir: ¿Sirve para una nueva publicación? ¿Utilizaron estas técnicas en el artículo? Si la respuesta es no, ¿por qué crees que no usaron estas herramientas estadísticas?
+
+#### 3.4.1.- Interpretación de ANOVA
+
+#### 3.4.2.- Interpretación de Biplot
+
+#### 3.4.3.- Interpretación Análisis factorial
+
+#### 3.4.4.- Interpretación de MANOVA
+
+## 4.- Colocar el doi de los 4 artículos utilizados.
+
+Si no tienen acceso a la investigación, utilicen el siguiente enlace: <https://sci-hub.hkvisa.net/>. Coloquen el doi o el título y descarguen el artículo para leerlo.

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nombre_Completo 1 - Correo1; Nombre_Completo 2 - Correo2; Nombre_Completo 3 - Correo3; Nombre_Completo 4 - Correo4;">
+<meta name="dcterms.date" content="2022-12-30">
+
+<title>Análisis avanzado e inteligencia artificial con R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Proyecto_Parcial_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Proyecto_Parcial_files/libs/quarto-html/quarto.js"></script>
+<script src="Proyecto_Parcial_files/libs/quarto-html/popper.min.js"></script>
+<script src="Proyecto_Parcial_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Proyecto_Parcial_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Proyecto_Parcial_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Proyecto_Parcial_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Proyecto_Parcial_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Proyecto_Parcial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Proyecto_Parcial_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<style>
+    .quarto-title-block .quarto-title-banner {
+      background: #243363;
+    }
+    </style>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Análisis avanzado e inteligencia artificial con R</h1>
+            <p class="subtitle lead">Proyecto Parcial</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Nombre_Completo 1 - Correo1; Nombre_Completo 2 - Correo2; Nombre_Completo 3 - Correo3; Nombre_Completo 4 - Correo4; </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">12/30/22</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenido</h2>
+   
+  <ul>
+  <li><a href="#importación-de-datos-1-punto" id="toc-importación-de-datos-1-punto" class="nav-link active" data-scroll-target="#importación-de-datos-1-punto">1.- Importación de datos (1 punto)</a>
+  <ul>
+  <li><a href="#revisiones-científicas-exhaustivas-de-un-área-de-su-interés" id="toc-revisiones-científicas-exhaustivas-de-un-área-de-su-interés" class="nav-link" data-scroll-target="#revisiones-científicas-exhaustivas-de-un-área-de-su-interés">1.2.- Revisiones científicas exhaustivas de un área de su interés</a></li>
+  </ul></li>
+  <li><a href="#visualización-de-datos-con-ggplot-4-punto-2-de-visualización-y-2-de-análisis" id="toc-visualización-de-datos-con-ggplot-4-punto-2-de-visualización-y-2-de-análisis" class="nav-link" data-scroll-target="#visualización-de-datos-con-ggplot-4-punto-2-de-visualización-y-2-de-análisis">2.- Visualización de datos con ggplot (4 punto; 2 de visualización y 2 de análisis)</a>
+  <ul>
+  <li><a href="#primer-1-punto-extra" id="toc-primer-1-punto-extra" class="nav-link" data-scroll-target="#primer-1-punto-extra">2.1- Primer 1 punto extra</a></li>
+  <li><a href="#análisis-de-los-gráficos" id="toc-análisis-de-los-gráficos" class="nav-link" data-scroll-target="#análisis-de-los-gráficos">2.2.- Análisis de los gráficos</a>
+  <ul class="collapse">
+  <li><a href="#interpretación-del-gráfico-1" id="toc-interpretación-del-gráfico-1" class="nav-link" data-scroll-target="#interpretación-del-gráfico-1">2.2.1.- Interpretación del gráfico 1</a></li>
+  <li><a href="#interpretación-del-gráfico-2" id="toc-interpretación-del-gráfico-2" class="nav-link" data-scroll-target="#interpretación-del-gráfico-2">2.2.2.- Interpretación del gráfico 2</a></li>
+  <li><a href="#interpretación-del-gráfico-3" id="toc-interpretación-del-gráfico-3" class="nav-link" data-scroll-target="#interpretación-del-gráfico-3">2.2.3.- Interpretación del gráfico 3</a></li>
+  <li><a href="#interpretación-del-gráfico-4" id="toc-interpretación-del-gráfico-4" class="nav-link" data-scroll-target="#interpretación-del-gráfico-4">2.2.4.- Interpretación del gráfico 4</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#estadística-descriptiva-e-inferencial-5-puntos-1-por-estadística-descriptiva-2-por-análisis-inferencial-y-multivariable-2-por-interpretación" id="toc-estadística-descriptiva-e-inferencial-5-puntos-1-por-estadística-descriptiva-2-por-análisis-inferencial-y-multivariable-2-por-interpretación" class="nav-link" data-scroll-target="#estadística-descriptiva-e-inferencial-5-puntos-1-por-estadística-descriptiva-2-por-análisis-inferencial-y-multivariable-2-por-interpretación">3.- Estadística descriptiva e inferencial (5 puntos; 1 por estadística descriptiva; 2 por análisis inferencial y multivariable; 2 por interpretación)</a>
+  <ul>
+  <li><a href="#estadística-descriptiva" id="toc-estadística-descriptiva" class="nav-link" data-scroll-target="#estadística-descriptiva">3.1.- Estadística descriptiva</a></li>
+  <li><a href="#segundo-1-punto-extra" id="toc-segundo-1-punto-extra" class="nav-link" data-scroll-target="#segundo-1-punto-extra">3.2.- Segundo 1 punto extra</a></li>
+  <li><a href="#análisis-inferencial-y-multivariable" id="toc-análisis-inferencial-y-multivariable" class="nav-link" data-scroll-target="#análisis-inferencial-y-multivariable">3.3.- Análisis inferencial y multivariable</a></li>
+  <li><a href="#realizar-la-interpretación-de-las-4-técnicas-anteriormente-utilizadas.-discutir-sirve-para-una-nueva-publicación-utilizaron-estas-técnicas-en-el-artículo-si-la-respuesta-es-no-por-qué-crees-que-no-usaron-estas-herramientas-estadísticas" id="toc-realizar-la-interpretación-de-las-4-técnicas-anteriormente-utilizadas.-discutir-sirve-para-una-nueva-publicación-utilizaron-estas-técnicas-en-el-artículo-si-la-respuesta-es-no-por-qué-crees-que-no-usaron-estas-herramientas-estadísticas" class="nav-link" data-scroll-target="#realizar-la-interpretación-de-las-4-técnicas-anteriormente-utilizadas.-discutir-sirve-para-una-nueva-publicación-utilizaron-estas-técnicas-en-el-artículo-si-la-respuesta-es-no-por-qué-crees-que-no-usaron-estas-herramientas-estadísticas">3.4.- Realizar la interpretación de las 4 técnicas anteriormente utilizadas. Discutir: ¿Sirve para una nueva publicación? ¿Utilizaron estas técnicas en el artículo? Si la respuesta es no, ¿por qué crees que no usaron estas herramientas estadísticas?</a>
+  <ul class="collapse">
+  <li><a href="#interpretación-de-anova" id="toc-interpretación-de-anova" class="nav-link" data-scroll-target="#interpretación-de-anova">3.4.1.- Interpretación de ANOVA</a></li>
+  <li><a href="#interpretación-de-biplot" id="toc-interpretación-de-biplot" class="nav-link" data-scroll-target="#interpretación-de-biplot">3.4.2.- Interpretación de Biplot</a></li>
+  <li><a href="#interpretación-análisis-factorial" id="toc-interpretación-análisis-factorial" class="nav-link" data-scroll-target="#interpretación-análisis-factorial">3.4.3.- Interpretación Análisis factorial</a></li>
+  <li><a href="#interpretación-de-manova" id="toc-interpretación-de-manova" class="nav-link" data-scroll-target="#interpretación-de-manova">3.4.4.- Interpretación de MANOVA</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#colocar-el-doi-de-los-4-artículos-utilizados." id="toc-colocar-el-doi-de-los-4-artículos-utilizados." class="nav-link" data-scroll-target="#colocar-el-doi-de-los-4-artículos-utilizados.">4.- Colocar el doi de los 4 artículos utilizados.</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell">
+
+</div>
+<p><img src="img/espol.png" width="353" height="66"> <img src="img/CIAP.jpeg" class="img-fluid" width="275"></p>
+<section id="importación-de-datos-1-punto" class="level2">
+<h2 class="anchored" data-anchor-id="importación-de-datos-1-punto">1.- Importación de datos (1 punto)</h2>
+<p>Tienen dos opciones: ### 1.1.- Bases de datos que se utilizan para IA Buscar 4 (si el grupo es de tres estudiantes, sólo hacer 3) artículos científicos del área de su interés o carrera en donde se utilice algoritmos de inteligencia artificial. Estas investigaciones todavía no necesitan entenderlo por completo. Sólo deben procurar de revisar de que se tenga la disponibilidad de descargar su base de datos. Posteriormente, usar las diferentes funciones de importación de archivos para que R lea las 4 bases de datos encontradas de estos artículos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para sus bases de datos. Las database deben tener diferentes tipos de formato.Archivos .csv o .xlsx se pueden repetir dos veces. Sin embargo, para hacer la lectura de los files deben utilizar las diferentes funciones enseñadas.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>siniestros <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'./data/BDD_NOVIEMBRE.csv'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>count_na <span class="ot">&lt;-</span> siniestros <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">funs</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(.))))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>siniestros <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ANIO) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ANIO     
+ Min.   :2017  
+ 1st Qu.:2017  
+ Median :2017  
+ Mean   :2017  
+ 3rd Qu.:2017  
+ Max.   :2017  </code></pre>
+</div>
+</div>
+<section id="revisiones-científicas-exhaustivas-de-un-área-de-su-interés" class="level3">
+<h3 class="anchored" data-anchor-id="revisiones-científicas-exhaustivas-de-un-área-de-su-interés">1.2.- Revisiones científicas exhaustivas de un área de su interés</h3>
+<p>Buscar 4 (si el grupo es de tres estudiantes, sólo hacer 3) revisiones científicos del área de su interés o carrera. Estas investigaciones necesitarán entenderlo por completo. Además, deberán revisar de que se tenga la disponibilidad de descargar su base de datos. Posteriormente, usar las diferentes funciones de importación de archivos para que R lea las 4 bases de datos encontradas de estos artículos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para sus bases de datos. Las database deben tener diferentes tipos de formato.Archivos .csv o .xlsx se pueden repetir dos veces. Sin embargo, para hacer la lectura de los files deben utilizar las diferentes funciones enseñadas. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="visualización-de-datos-con-ggplot-4-punto-2-de-visualización-y-2-de-análisis" class="level2">
+<h2 class="anchored" data-anchor-id="visualización-de-datos-con-ggplot-4-punto-2-de-visualización-y-2-de-análisis">2.- Visualización de datos con ggplot (4 punto; 2 de visualización y 2 de análisis)</h2>
+<p>Deben realizar 4 (si el grupo es de tres estudiantes, sólo hacer 3) visualizaciones con ggplot que sean lo más idénticas posibles al que se presentan en el artículo. Procuren revisar: - El nombre de los ejes. ¿Está en negrita, cursiva, subrayado? - El nombre del título. ¿Está en negrita, cursiva, subrayado? ¿Su tamaño de letra es el más grande de todos los otros tipos de palabras? - ¿Tiene leyenda? ¿Qué se lee en la leyenda? ¿Y los colores? - ¿Cómo es el color de fondo? ¿Presenta cuadrículas? - Revisar tipo de texto, líneas, coordenadas, valores de error. - ¿Es interactivo?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para producir las visualizaciones. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="primer-1-punto-extra" class="level3">
+<h3 class="anchored" data-anchor-id="primer-1-punto-extra">2.1- Primer 1 punto extra</h3>
+<p>No es necesario, pero si quieren tener 1/2 punto extra, deben buscar en internet cómo hacer para poner las 4 figuras anteriormente producidas en un solo gráfico. Una vez que encuentren el paquete y la función, escribir el código a continuación:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para producir la visualización. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="análisis-de-los-gráficos" class="level3">
+<h3 class="anchored" data-anchor-id="análisis-de-los-gráficos">2.2.- Análisis de los gráficos</h3>
+<p>Interpretar los resultados. No copiar ni traducir y copiar. Escribir con sus propias palabras los hallazgos encontrados. Con base al conocimiento de su carrera, ¿qué errores o límitantes encuentra en los resultados? ¿qué se puede mejorar?</p>
+<section id="interpretación-del-gráfico-1" class="level4">
+<h4 class="anchored" data-anchor-id="interpretación-del-gráfico-1">2.2.1.- Interpretación del gráfico 1</h4>
+</section>
+<section id="interpretación-del-gráfico-2" class="level4">
+<h4 class="anchored" data-anchor-id="interpretación-del-gráfico-2">2.2.2.- Interpretación del gráfico 2</h4>
+</section>
+<section id="interpretación-del-gráfico-3" class="level4">
+<h4 class="anchored" data-anchor-id="interpretación-del-gráfico-3">2.2.3.- Interpretación del gráfico 3</h4>
+</section>
+<section id="interpretación-del-gráfico-4" class="level4">
+<h4 class="anchored" data-anchor-id="interpretación-del-gráfico-4">2.2.4.- Interpretación del gráfico 4</h4>
+</section>
+</section>
+</section>
+<section id="estadística-descriptiva-e-inferencial-5-puntos-1-por-estadística-descriptiva-2-por-análisis-inferencial-y-multivariable-2-por-interpretación" class="level2">
+<h2 class="anchored" data-anchor-id="estadística-descriptiva-e-inferencial-5-puntos-1-por-estadística-descriptiva-2-por-análisis-inferencial-y-multivariable-2-por-interpretación">3.- Estadística descriptiva e inferencial (5 puntos; 1 por estadística descriptiva; 2 por análisis inferencial y multivariable; 2 por interpretación)</h2>
+<section id="estadística-descriptiva" class="level3">
+<h3 class="anchored" data-anchor-id="estadística-descriptiva">3.1.- Estadística descriptiva</h3>
+<p>Realizar estadística descriptiva de las 4 bases de datos utilizadas en este trabajo. Determinar: - Media - Mediana - Cuartiles 25% y 75% - Curtosis - Simetría - Mínimo - Máximo - Desviación estándar - Varianza</p>
+<p>Armar todos estos resultados en una sola tabla. En las columnas van a estar los nombres de las variables y en las filas van a tener cada una de las medidas de tendencia central y de estadística descriptiva.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para el ejercicio</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="segundo-1-punto-extra" class="level3">
+<h3 class="anchored" data-anchor-id="segundo-1-punto-extra">3.2.- Segundo 1 punto extra</h3>
+<p>Realizar el mismo procedimiento anterior utilizando un paquete que encuentre en internet. Hay un paquete que hace todo con una sola función. Búsquelo y una vez que lo halle, haga el ejercicio anterior.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para el ejercicio </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="análisis-inferencial-y-multivariable" class="level3">
+<h3 class="anchored" data-anchor-id="análisis-inferencial-y-multivariable">3.3.- Análisis inferencial y multivariable</h3>
+<p>En este apartado, deben realizar: - ANOVA - Biplot - Análisis factorial - MANOVA</p>
+<p>Para al menos una base de datos. No es necesario hacerlo para las 4 bases de datos. Sólo se requerirá utilizar otra base de datos si la técnica no es aplicable en las bases de datos encontradas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para ANOVA </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para Biplot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para Análisis factorial</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para MANOVA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="realizar-la-interpretación-de-las-4-técnicas-anteriormente-utilizadas.-discutir-sirve-para-una-nueva-publicación-utilizaron-estas-técnicas-en-el-artículo-si-la-respuesta-es-no-por-qué-crees-que-no-usaron-estas-herramientas-estadísticas" class="level3">
+<h3 class="anchored" data-anchor-id="realizar-la-interpretación-de-las-4-técnicas-anteriormente-utilizadas.-discutir-sirve-para-una-nueva-publicación-utilizaron-estas-técnicas-en-el-artículo-si-la-respuesta-es-no-por-qué-crees-que-no-usaron-estas-herramientas-estadísticas">3.4.- Realizar la interpretación de las 4 técnicas anteriormente utilizadas. Discutir: ¿Sirve para una nueva publicación? ¿Utilizaron estas técnicas en el artículo? Si la respuesta es no, ¿por qué crees que no usaron estas herramientas estadísticas?</h3>
+<section id="interpretación-de-anova" class="level4">
+<h4 class="anchored" data-anchor-id="interpretación-de-anova">3.4.1.- Interpretación de ANOVA</h4>
+</section>
+<section id="interpretación-de-biplot" class="level4">
+<h4 class="anchored" data-anchor-id="interpretación-de-biplot">3.4.2.- Interpretación de Biplot</h4>
+</section>
+<section id="interpretación-análisis-factorial" class="level4">
+<h4 class="anchored" data-anchor-id="interpretación-análisis-factorial">3.4.3.- Interpretación Análisis factorial</h4>
+</section>
+<section id="interpretación-de-manova" class="level4">
+<h4 class="anchored" data-anchor-id="interpretación-de-manova">3.4.4.- Interpretación de MANOVA</h4>
+</section>
+</section>
+</section>
+<section id="colocar-el-doi-de-los-4-artículos-utilizados." class="level2">
+<h2 class="anchored" data-anchor-id="colocar-el-doi-de-los-4-artículos-utilizados.">4.- Colocar el doi de los 4 artículos utilizados.</h2>
+<p>Si no tienen acceso a la investigación, utilicen el siguiente enlace: <a href="https://sci-hub.hkvisa.net/" class="uri">https://sci-hub.hkvisa.net/</a>. Coloquen el doi o el título y descarguen el artículo para leerlo.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
