@@ -48,13 +48,6 @@ library(tidyverse)
 
 siniestros <- read.csv('./data/BDD_NOVIEMBRE.csv')
 
-count_na <- siniestros %>% 
-  select(everything()) %>%
-  summarise_all(funs(sum(is.na(.))))
-
-siniestros %>%
-  select(ANIO) %>%
-  summary()
 ```
 
 ### 1.2.- Revisiones científicas exhaustivas de un área de su interés
@@ -73,7 +66,7 @@ Deben realizar 4 (si el grupo es de tres estudiantes, sólo hacer 3) visualizaci
 
 ```{r}
 # Colocar aquí el código para producir las visualizaciones. 
-
+ggplot(siniestros, aes(ANIO))+ geom_histogram()
 
 ```
 
