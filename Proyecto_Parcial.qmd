@@ -102,16 +102,18 @@ ggplot(data = df_siniestros) +
   geom_bar(mapping = aes(x = fct_rev(fct_infreq(PROVINCIA)), fill=PROVINCIA), show.legend = FALSE) +
   coord_flip() +
   labs(y="Siniestros", x="Provincias") +
-  ggtitle("Siniestros de tránsito por provincia")
+  ggtitle("Siniestros de tránsito por provincia del 2017 al 2022") +
+  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 ```{r}
-siniestros_por_fecha <- df_siniestros %>%
-  count(FECHA)
 
-ggplot(data = siniestros_por_fecha) + 
-  geom_point(mapping = aes(x = FECHA, y = n))
-
+ggplot(data = df_siniestros) + 
+  geom_boxplot( mapping = aes(x = fct_rev(fct_infreq(TIPO_DE_SINIESTRO)), y = ID, fill=TIPO_DE_SINIESTRO), show.legend = FALSE) +
+  coord_flip() +
+  labs(x="Tipo de siniestro", y="Conteo") +
+  ggtitle("Siniestros de tránsito por tipo del 2017 al 2022") +
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ### 2.1- Primer 1 punto extra
