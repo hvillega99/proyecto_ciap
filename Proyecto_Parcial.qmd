@@ -46,15 +46,18 @@ Tienen dos opciones: \### 1.1.- Bases de datos que se utilizan para IA Buscar 4 
 
 library(tidyverse)
 
-siniestros <- read.csv('./data/BDD_NOVIEMBRE.csv')
+siniestros <- read_csv('./data/BDD_NOVIEMBRE.csv')
+
+```
+
+```{r}
+#Conteo de datos nulos
 
 count_na <- siniestros %>% 
   select(everything()) %>%
   summarise_all(funs(sum(is.na(.))))
 
-df_siniestros <- siniestros %>%
-  select(ANIO, LESIONADOS, FALLECIDOS, PROVINCIA, CANTON, PARROQUIA, FECHA, HORA, TIPO_DE_SINIESTRO, TIPO_DE_VEHICULO_1)
-
+view(count_na)
 ```
 
 ### 1.2.- Revisiones científicas exhaustivas de un área de su interés
@@ -72,8 +75,40 @@ Buscar 4 (si el grupo es de tres estudiantes, sólo hacer 3) revisiones científ
 Deben realizar 4 (si el grupo es de tres estudiantes, sólo hacer 3) visualizaciones con ggplot que sean lo más idénticas posibles al que se presentan en el artículo. Procuren revisar: - El nombre de los ejes. ¿Está en negrita, cursiva, subrayado? - El nombre del título. ¿Está en negrita, cursiva, subrayado? ¿Su tamaño de letra es el más grande de todos los otros tipos de palabras? - ¿Tiene leyenda? ¿Qué se lee en la leyenda? ¿Y los colores? - ¿Cómo es el color de fondo? ¿Presenta cuadrículas? - Revisar tipo de texto, líneas, coordenadas, valores de error. - ¿Es interactivo?
 
 ```{r}
+# Selección de variables
+
+
+df_siniestros <- siniestros %>%
+  select(ID,
+         ANIO, 
+         LESIONADOS, 
+         FALLECIDOS, 
+         PROVINCIA, 
+         CANTON, 
+         PARROQUIA, 
+         FECHA, 
+         HORA, 
+         TIPO_DE_SINIESTRO, 
+         TIPO_DE_VEHICULO_1)
+
+```
+
+```{r}
 # Colocar aquí el código para producir las visualizaciones. 
-ggplot(siniestros, aes(ANIO))+ geom_histogram()
+
+ggplot(data = df_siniestros) + 
+  geom_bar(mapping = aes(x = fct_rev(fct_infreq(PROVINCIA)), fill=PROVINCIA), show.legend = FALSE) +
+  coord_flip() +
+  labs(y="Siniestros", x="Provincias") +
+  ggtitle("Siniestros de tránsito por provincia")
+
+```
+```{r}
+siniestros_por_fecha <- df_siniestros %>%
+  count(FECHA)
+
+ggplot(data = siniestros_por_fecha) + 
+  geom_point(mapping = aes(x = FECHA, y = n))
 
 ```
 
