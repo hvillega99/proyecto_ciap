@@ -45,6 +45,7 @@ Tienen dos opciones: \### 1.1.- Bases de datos que se utilizan para IA Buscar 4 
 # Colocar aquí el código para sus bases de datos. Las database deben tener diferentes tipos de formato.Archivos .csv o .xlsx se pueden repetir dos veces. Sin embargo, para hacer la lectura de los files deben utilizar las diferentes funciones enseñadas.
 
 library(tidyverse)
+library(reshape)
 
 siniestros <- read_csv('./data/BDD_NOVIEMBRE.csv')
 
@@ -58,6 +59,7 @@ count_na <- siniestros %>%
   summarise_all(funs(sum(is.na(.))))
 
 view(count_na)
+
 ```
 
 ### 1.2.- Revisiones científicas exhaustivas de un área de su interés
@@ -143,7 +145,65 @@ Realizar estadística descriptiva de las 4 bases de datos utilizadas en este tra
 Armar todos estos resultados en una sola tabla. En las columnas van a estar los nombres de las variables y en las filas van a tener cada una de las medidas de tendencia central y de estadística descriptiva.
 
 ```{r}
+
+df_siniestros2 <- df_siniestros %>% separate(FECHA,c("DIA","MES"))
+df_siniestros2 <- df_siniestros2[c("TIPO_DE_SINIESTRO","TIPO_DE_VEHICULO_1","PROVINCIA","CANTON",
+                              "PARROQUIA","DIA","MES","ANIO","HORA","LESIONADOS","FALLECIDOS")]
+df_siniestros2 <- df_siniestros2 %>% rename(c(LESIONADOS="TOTAL_DE_LESIONADOS",FALLECIDOS="TOTAL_DE_FALLECIDOS"))
+```
+
+```{r}
 # Colocar aquí el código para el ejercicio
+
+library(moments)
+
+stats_anio <- summary(df_siniestros2$ANIO)
+curtosis_anio <- kurtosis(df_siniestros2$ANIO)
+simetria_anio <- skewness(df_siniestros2$ANIO)
+sd_anio <- sd(df_siniestros2$ANIO)
+var_anio <- sd_anio^2
+
+stats_lesionados <- summary(df_siniestros2$TOTAL_DE_LESIONADOS)
+curtosis_lesionados <- kurtosis(df_siniestros2$TOTAL_DE_LESIONADOS)
+simetria_lesionados <- skewness(df_siniestros2$TOTAL_DE_LESIONADOS)
+sd_lesionados <- sd(df_siniestros2$TOTAL_DE_LESIONADOS)
+var_lesionados <- sd_lesionados^2
+
+stats_fallecidos <- summary(df_siniestros2$TOTAL_DE_FALLECIDOS)
+curtosis_fallecidos <- kurtosis(df_siniestros2$TOTAL_DE_FALLECIDOS)
+simetria_fallecidos <- skewness(df_siniestros2$TOTAL_DE_FALLECIDOS)
+sd_fallecidos <- sd(df_siniestros2$TOTAL_DE_FALLECIDOS)
+var_fallecidos <- sd_fallecidos^2
+
+medias <- c(round(stats_anio[4],2),round(stats_lesionados[4],2),round(stats_fallecidos[4],2))
+medianas <- c(round(stats_anio[3],2),round(stats_lesionados[3],2),round(stats_fallecidos[3],2))
+primerQuartil <- c(round(stats_anio[2],2),round(stats_lesionados[2],2),round(stats_fallecidos[2],2))
+tercertQuartil <- c(round(stats_anio[5],2),round(stats_lesionados[5],2),round(stats_fallecidos[5],2))
+Curtosis <- c(curtosis_anio,curtosis_lesionados,curtosis_fallecidos)
+Simetrias <- c(simetria_anio,simetria_lesionados,simetria_fallecidos)
+minimos <- c(round(stats_anio[1],2),round(stats_lesionados[1],2),round(stats_fallecidos[1],2))
+maximos <- c(round(stats_anio[6],2),round(stats_lesionados[6],2),round(stats_fallecidos[6],2))
+desviaciones_estandar <- c(sd_anio,sd_lesionados,sd_fallecidos)
+varianzas <- c(var_anio,var_lesionados,var_lesionados)
+
+df_stats <- data.frame(
+            media=medias,mediana=medianas,
+            primerQuartil=primerQuartil,tercerQuartil=tercertQuartil,
+            curtosis=Curtosis,simetria=Simetrias,
+            minimo=minimos,maximo=maximos,
+            desviacion_estandar=desviaciones_estandar,varianza=varianzas
+)
+
+df_stats_new <- df_stats %>% mutate(" "= c("ANIO","TOTAL_DE_LESIONADOS","TOTAL_DE_FALLECIDOS"))
+
+
+df_stats_new <- df_stats_new[c(" ","media","mediana","primerQuartil",
+            "tercerQuartil","curtosis","simetria","minimo","maximo",
+                              "desviacion_estandar","varianza")]
+
+df_stats_transpose <- data.frame(t(df_stats_new[-1]))
+
+colnames(df_stats_transpose) <- df_stats_new[, 1]
 
 
 ```

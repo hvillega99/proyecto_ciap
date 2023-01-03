@@ -192,8 +192,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para sus bases de datos. Las database deben tener diferentes tipos de formato.Archivos .csv o .xlsx se pueden repetir dos veces. Sin embargo, para hacer la lectura de los files deben utilizar las diferentes funciones enseñadas.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>siniestros <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'./data/BDD_NOVIEMBRE.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>siniestros <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'./data/BDD_NOVIEMBRE.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Conteo de datos nulos</span></span>
@@ -285,14 +286,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Realizar estadística descriptiva de las 4 bases de datos utilizadas en este trabajo. Determinar: - Media - Mediana - Cuartiles 25% y 75% - Curtosis - Simetría - Mínimo - Máximo - Desviación estándar - Varianza</p>
 <p>Armar todos estos resultados en una sola tabla. En las columnas van a estar los nombres de las variables y en las filas van a tener cada una de las medidas de tendencia central y de estadística descriptiva.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para el ejercicio</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_siniestros2 <span class="ot">&lt;-</span> df_siniestros <span class="sc">%&gt;%</span> <span class="fu">separate</span>(FECHA,<span class="fu">c</span>(<span class="st">"DIA"</span>,<span class="st">"MES"</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_siniestros2 <span class="ot">&lt;-</span> df_siniestros2[<span class="fu">c</span>(<span class="st">"TIPO_DE_SINIESTRO"</span>,<span class="st">"TIPO_DE_VEHICULO_1"</span>,<span class="st">"PROVINCIA"</span>,<span class="st">"CANTON"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"PARROQUIA"</span>,<span class="st">"DIA"</span>,<span class="st">"MES"</span>,<span class="st">"ANIO"</span>,<span class="st">"HORA"</span>,<span class="st">"LESIONADOS"</span>,<span class="st">"FALLECIDOS"</span>)]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df_siniestros2 <span class="ot">&lt;-</span> df_siniestros2 <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="fu">c</span>(<span class="at">LESIONADOS=</span><span class="st">"TOTAL_DE_LESIONADOS"</span>,<span class="at">FALLECIDOS=</span><span class="st">"TOTAL_DE_FALLECIDOS"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para el ejercicio</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moments)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>stats_anio <span class="ot">&lt;-</span> <span class="fu">summary</span>(df_siniestros2<span class="sc">$</span>ANIO)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>curtosis_anio <span class="ot">&lt;-</span> <span class="fu">kurtosis</span>(df_siniestros2<span class="sc">$</span>ANIO)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>simetria_anio <span class="ot">&lt;-</span> <span class="fu">skewness</span>(df_siniestros2<span class="sc">$</span>ANIO)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>sd_anio <span class="ot">&lt;-</span> <span class="fu">sd</span>(df_siniestros2<span class="sc">$</span>ANIO)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>var_anio <span class="ot">&lt;-</span> sd_anio<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>stats_lesionados <span class="ot">&lt;-</span> <span class="fu">summary</span>(df_siniestros2<span class="sc">$</span>TOTAL_DE_LESIONADOS)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>curtosis_lesionados <span class="ot">&lt;-</span> <span class="fu">kurtosis</span>(df_siniestros2<span class="sc">$</span>TOTAL_DE_LESIONADOS)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>simetria_lesionados <span class="ot">&lt;-</span> <span class="fu">skewness</span>(df_siniestros2<span class="sc">$</span>TOTAL_DE_LESIONADOS)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>sd_lesionados <span class="ot">&lt;-</span> <span class="fu">sd</span>(df_siniestros2<span class="sc">$</span>TOTAL_DE_LESIONADOS)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>var_lesionados <span class="ot">&lt;-</span> sd_lesionados<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>stats_fallecidos <span class="ot">&lt;-</span> <span class="fu">summary</span>(df_siniestros2<span class="sc">$</span>TOTAL_DE_FALLECIDOS)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>curtosis_fallecidos <span class="ot">&lt;-</span> <span class="fu">kurtosis</span>(df_siniestros2<span class="sc">$</span>TOTAL_DE_FALLECIDOS)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>simetria_fallecidos <span class="ot">&lt;-</span> <span class="fu">skewness</span>(df_siniestros2<span class="sc">$</span>TOTAL_DE_FALLECIDOS)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>sd_fallecidos <span class="ot">&lt;-</span> <span class="fu">sd</span>(df_siniestros2<span class="sc">$</span>TOTAL_DE_FALLECIDOS)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>var_fallecidos <span class="ot">&lt;-</span> sd_fallecidos<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">round</span>(stats_anio[<span class="dv">4</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_lesionados[<span class="dv">4</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_fallecidos[<span class="dv">4</span>],<span class="dv">2</span>))</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>medianas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">round</span>(stats_anio[<span class="dv">3</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_lesionados[<span class="dv">3</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_fallecidos[<span class="dv">3</span>],<span class="dv">2</span>))</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>primerQuartil <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">round</span>(stats_anio[<span class="dv">2</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_lesionados[<span class="dv">2</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_fallecidos[<span class="dv">2</span>],<span class="dv">2</span>))</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>tercertQuartil <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">round</span>(stats_anio[<span class="dv">5</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_lesionados[<span class="dv">5</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_fallecidos[<span class="dv">5</span>],<span class="dv">2</span>))</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>Curtosis <span class="ot">&lt;-</span> <span class="fu">c</span>(curtosis_anio,curtosis_lesionados,curtosis_fallecidos)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>Simetrias <span class="ot">&lt;-</span> <span class="fu">c</span>(simetria_anio,simetria_lesionados,simetria_fallecidos)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>minimos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">round</span>(stats_anio[<span class="dv">1</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_lesionados[<span class="dv">1</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_fallecidos[<span class="dv">1</span>],<span class="dv">2</span>))</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>maximos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">round</span>(stats_anio[<span class="dv">6</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_lesionados[<span class="dv">6</span>],<span class="dv">2</span>),<span class="fu">round</span>(stats_fallecidos[<span class="dv">6</span>],<span class="dv">2</span>))</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>desviaciones_estandar <span class="ot">&lt;-</span> <span class="fu">c</span>(sd_anio,sd_lesionados,sd_fallecidos)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>varianzas <span class="ot">&lt;-</span> <span class="fu">c</span>(var_anio,var_lesionados,var_lesionados)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>df_stats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">media=</span>medias,<span class="at">mediana=</span>medianas,</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">primerQuartil=</span>primerQuartil,<span class="at">tercerQuartil=</span>tercertQuartil,</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>            <span class="at">curtosis=</span>Curtosis,<span class="at">simetria=</span>Simetrias,</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>            <span class="at">minimo=</span>minimos,<span class="at">maximo=</span>maximos,</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>            <span class="at">desviacion_estandar=</span>desviaciones_estandar,<span class="at">varianza=</span>varianzas</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>df_stats_new <span class="ot">&lt;-</span> df_stats <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="st">" "</span><span class="ot">=</span> <span class="fu">c</span>(<span class="st">"ANIO"</span>,<span class="st">"TOTAL_DE_LESIONADOS"</span>,<span class="st">"TOTAL_DE_FALLECIDOS"</span>))</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>df_stats_new <span class="ot">&lt;-</span> df_stats_new[<span class="fu">c</span>(<span class="st">" "</span>,<span class="st">"media"</span>,<span class="st">"mediana"</span>,<span class="st">"primerQuartil"</span>,</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">"tercerQuartil"</span>,<span class="st">"curtosis"</span>,<span class="st">"simetria"</span>,<span class="st">"minimo"</span>,<span class="st">"maximo"</span>,</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"desviacion_estandar"</span>,<span class="st">"varianza"</span>)]</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>df_stats_transpose <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(df_stats_new[<span class="sc">-</span><span class="dv">1</span>]))</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df_stats_transpose) <span class="ot">&lt;-</span> df_stats_new[, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="segundo-1-punto-extra" class="level3">
 <h3 class="anchored" data-anchor-id="segundo-1-punto-extra">3.2.- Segundo 1 punto extra</h3>
 <p>Realizar el mismo procedimiento anterior utilizando un paquete que encuentre en internet. Hay un paquete que hace todo con una sola función. Búsquelo y una vez que lo halle, haga el ejercicio anterior.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para el ejercicio </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para el ejercicio </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="análisis-inferencial-y-multivariable" class="level3">
@@ -300,16 +357,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>En este apartado, deben realizar: - ANOVA - Biplot - Análisis factorial - MANOVA</p>
 <p>Para al menos una base de datos. No es necesario hacerlo para las 4 bases de datos. Sólo se requerirá utilizar otra base de datos si la técnica no es aplicable en las bases de datos encontradas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para ANOVA </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para ANOVA </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para Biplot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para Biplot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para Análisis factorial</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para Análisis factorial</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para MANOVA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocar aquí el código para MANOVA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="realizar-la-interpretación-de-las-4-técnicas-anteriormente-utilizadas.-discutir-sirve-para-una-nueva-publicación-utilizaron-estas-técnicas-en-el-artículo-si-la-respuesta-es-no-por-qué-crees-que-no-usaron-estas-herramientas-estadísticas" class="level3">
